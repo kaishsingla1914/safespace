@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Safe Place 🤍</title>
+
+<style>
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:#ffffff;
+overflow:hidden;
+text-align:center;
+}
+
+/* Dark overlay */
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.4);
+z-index:-1;
+}
+
+/* Stars */
+.stars{
+position:fixed;
+width:100%;
+height:100%;
+overflow:hidden;
+z-index:-2;
+}
+
+.star{
+position:absolute;
+width:2px;
+height:2px;
+background:white;
+animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+from{opacity:0.3;}
+to{opacity:1;}
+}
+
+/* Center container */
+.container{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:90%;
+max-width:520px;
+}
+
+/* Glass card */
+.card{
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(20px);
+padding:30px;
+border-radius:25px;
+box-shadow:0 0 40px rgba(255,255,255,0.25);
+animation:fadeIn 1.5s ease;
+color:#ffffff;
+}
+
+h2, p{
+text-shadow:0 0 10px rgba(0,0,0,0.7);
+}
+
+button{
+padding:12px 22px;
+border:none;
+border-radius:25px;
+margin:10px;
+cursor:pointer;
+background:linear-gradient(45deg,#ff6b81,#ff4757);
+color:white;
+font-weight:bold;
+font-size:14px;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.07);
+}
+
+/* Gift */
+.gift{
+font-size:85px;
+cursor:pointer;
+animation:bounce 1.5s infinite;
+}
+
+@keyframes bounce{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-12px);}
+}
+
+.hidden{display:none;}
+
+@keyframes fadeIn{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+/* Envelope */
+.envelope{
+font-size:65px;
+cursor:pointer;
+}
+
+/* Fireworks */
+.spark{
+position:absolute;
+width:6px;
+height:6px;
+background:#ffffff;
+border-radius:50%;
+animation:explode 1s ease forwards;
+}
+
+@keyframes explode{
+from{transform:scale(1);opacity:1;}
+to{transform:scale(6);opacity:0;}
+}
+
+/* Gallery */
+.gallery{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:15px;
+margin-top:20px;
+}
+
+.gallery img{
+width:110px;
+height:140px;
+object-fit:cover;
+border-radius:18px;
+transition:0.4s;
+cursor:pointer;
+box-shadow:0 10px 25px rgba(0,0,0,0.5);
+}
+
+.gallery img:hover{
+transform:scale(1.08);
+box-shadow:0 15px 35px rgba(255,255,255,0.3);
+}
+</style>
+</head>
+
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="container">
+
+<!-- PAGE 1 -->
+<div id="page1" class="card">
+<h2>Open this when the world feels heavy 🤍</h2>
+<div class="gift" onclick="openGift()">🎁</div>
+<p>Click the gift</p>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="card hidden">
+<h2>✨ A Little Light For You ✨</h2>
+<p>Even if everyone says you're wrong… I don’t see it that way.</p>
+<button onclick="showSafe()">Go to Your Safe Space 🌙</button>
+</div>
+
+<!-- SAFE PAGE -->
+<div id="page3" class="card hidden">
+<h2>You’re Safe Here 🤍</h2>
+<button onclick="randomMessage()">Click for comfort</button>
+<p id="comfortText"></p>
+<button onclick="showLetter()">Open Letter 💌</button>
+<button onclick="showMemory()">Memories 📸</button>
+<button onclick="callMe()">Call Me 📞</button>
+</div>
+
+<!-- LETTER PAGE -->
+<div id="letterPage" class="card hidden">
+<h2>Open the Envelope</h2>
+<div class="envelope" onclick="openLetter()">💌</div>
+<p id="letterText" class="hidden">
+You are not wrong for feeling deeply.<br><br>
+Even if the world misunderstands you, I don’t.<br><br>
+You are allowed to feel hurt. You are allowed to rest.<br><br>
+I’m here. Always.<br><br>
+<b style="color:#ffd6e0;">You are actually too good to feel this bad.</b>
+</p>
+<button onclick="backHome()">Back</button>
+</div>
+
+<!-- MEMORY PAGE -->
+<div id="memoryPage" class="card hidden">
+<h2>Memories 📸</h2>
+
+<div class="gallery">
+    <img src="img1.jpeg">
+    <img src="img2.jpeg">
+    <img src="img3.jpeg">
+</div>
+
+<p style="margin-top:20px;">
+Remember the times you smiled without pressure?
+</p>
+
+<p style="margin-top:10px; font-weight:bold; color:#ffd6e0;">
+Your smile carries a light that even the mountains behind you can't compete with.
+</p>
+
+<button onclick="backHome()">Back</button>
+</div>
+
+</div>
+
+<script>
+
+/* Stars */
+for(let i=0;i<120;i++){
+let star=document.createElement("div");
+star.className="star";
+star.style.top=Math.random()*100+"%";
+star.style.left=Math.random()*100+"%";
+star.style.animationDuration=(Math.random()*3+1)+"s";
+document.getElementById("stars").appendChild(star);
+}
+
+function openGift(){
+document.getElementById("page1").classList.add("hidden");
+document.getElementById("page2").classList.remove("hidden");
+fireworks();
+}
+
+function showSafe(){
+document.getElementById("page2").classList.add("hidden");
+document.getElementById("page3").classList.remove("hidden");
+}
+
+function showLetter(){
+document.getElementById("page3").classList.add("hidden");
+document.getElementById("letterPage").classList.remove("hidden");
+}
+
+function showMemory(){
+document.getElementById("page3").classList.add("hidden");
+document.getElementById("memoryPage").classList.remove("hidden");
+}
+
+function backHome(){
+document.getElementById("letterPage").classList.add("hidden");
+document.getElementById("memoryPage").classList.add("hidden");
+document.getElementById("page3").classList.remove("hidden");
+}
+
+function openLetter(){
+document.getElementById("letterText").classList.remove("hidden");
+}
+
+function randomMessage(){
+const messages=[
+"You don’t have to prove anything tonight.",
+"I’m on your side.",
+"You’re not difficult. You’re just feeling deeply.",
+"Rest here for a bit.",
+"You matter more than you think.",
+"Let the world be loud. You can be quiet here."
+];
+let random=messages[Math.floor(Math.random()*messages.length)];
+document.getElementById("comfortText").innerHTML=random+"<br><br><b style='color:#ffd6e0;'>You are actually too good to feel this bad.</b>";
+}
+
+function callMe(){
+alert("Call me. I’m here for you 🤍");
+}
+
+function fireworks(){
+for(let i=0;i<30;i++){
+let spark=document.createElement("div");
+spark.className="spark";
+spark.style.top=Math.random()*100+"%";
+spark.style.left=Math.random()*100+"%";
+document.body.appendChild(spark);
+setTimeout(()=>spark.remove(),1000);
+}
+}
+
+</script>
+
+</body>
+</html>
